@@ -1,0 +1,13 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Tactics Board tests</title>
+<style>body{font:14px/1.5 ui-monospace,Menlo,monospace;background:#0b1114;color:#e9efea;padding:24px}.ok{color:#3fd894}.fail{color:#ff6a6a}</style>
+<h1>Tactics Board tests</h1>
+<pre id="out">Running…</pre>
+<script type="module">
+  const lines = [];
+  console.log = (...a) => lines.push(a.join(' '));
+  await import('./run.js');
+  const r = globalThis.__testResults;
+  document.getElementById('out').innerHTML = r.results.map((t) => `<span class="${t.ok ? 'ok' : 'fail'}">${t.ok ? 'ok  ' : 'FAIL'} ${t.name}${t.err ? '\n      ' + t.err : ''}</span>`).join('\n') + `\n\n${r.passed} passed, ${r.failed} failed`;
+</script>

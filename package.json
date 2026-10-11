@@ -1,0 +1,12 @@
+{
+  "name": "soccer-tactics-board",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tactics board for soccer coaches: formations, animated plays, set pieces, defensive AI and matchup analysis. Runs in the browser, no build step.",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/run.js",
+    "start": "python3 tools/serve.py",
+    "build": "python3 tools/serve.py --build"
+  }
+}

@@ -401,6 +401,11 @@ test('flow playback: continuous runs do not stop at step boundaries', () => {
   const v = (k, t, flow) => { const p = frameAt(t2, k, t, { flow }).pos.a, q = frameAt(t2, k, t + 0.005, { flow }).pos.a; return Math.hypot(p.x - q.x, p.y - q.y); };
   ok(v(0, 0.99, true) > 0.05 && v(1, 0.0, true) > 0.05, 'keeps moving through the boundary in flow mode');
   ok(v(0, 0.994, false) < 0.02, 'eases to a stop in coach mode');
+  // A single run (no follow-up) still slows near the end in flow mode, but never stops dead.
+  const one = { start: { pos: { a: { x: 10, y: 10 } }, ball: { owner: null, x: 50, y: 50 } }, steps: [{ actions: [{ id: 'r', type: 'run', from: 'a', target: { x: 40, y: 10 } }] }] };
+  const t3 = buildTimeline(one, { a: 'home' }, { carry: 2 });
+  const sp1 = (t, flow) => { const p = frameAt(t3, 0, t, { flow }).pos.a, q = frameAt(t3, 0, t + 0.005, { flow }).pos.a; return Math.hypot(p.x - q.x, p.y - q.y); };
+  ok(sp1(0.99, true) > sp1(0.99, false) && sp1(0.5, true) > sp1(0.99, true), 'flow: shorter dip at the end of a step');
   near(frameAt(t2, 0, 1, { flow: true }).pos.a.x, 30, 1e-9);
 });
 

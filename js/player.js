@@ -31,7 +31,7 @@ function playSounds(s, play, step, t) {
 }
 const resetSound = (step, t = -1e-6) => { lastStep = step; lastT = t; };
 
-const LEAD = 0.55, HOLD = 0.4;
+const LEAD = 0.4, HOLD = 0.25;
 
 let P = { active: false, playing: false, step: 0, t: 0, draw: 1, phase: 'move', ended: false };
 const subs = new Set();

@@ -171,7 +171,10 @@ export function buildTimeline(play, sideOf, opts = {}) {
 
 // Easing for a run. Continuous runs keep their speed across step boundaries.
 function moveEase(u, m, flow) {
-  if (!flow || (!m.cin && !m.cout)) return ease.inOutSine(u);
+  if (!flow) return ease.inOutSine(u);
+  // Flowing playback: soften the slow-down at each end so steps run together with
+  // only a short dip between them.
+  if (!m.cin && !m.cout) return 0.62 * ease.inOutSine(u) + 0.38 * u;
   if (m.cin && m.cout) return u;
   if (m.cin) return Math.sin((u * Math.PI) / 2);
   return 1 - Math.cos((u * Math.PI) / 2);
